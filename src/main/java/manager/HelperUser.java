@@ -1,5 +1,6 @@
 package manager;
 
+import model.User;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,8 +20,15 @@ public class HelperUser extends HelperBase{
         findAndType(By.name("email"), email);
         findAndType(By.name("password"), password);
     }
+    public void fillLoginRegForm(User user){
+        findAndType(By.name("email"), user.getEmail());
+        findAndType(By.name("password"), user.getPassword());
+    }
     public void loginSubmit(){
         click(By.xpath("//button[text()='Login']"));
+    }
+    public void registrationSubmit(){
+        click(By.xpath("//button[text()='Registration']"));
     }
 
     public boolean isLogged() {
@@ -31,7 +39,7 @@ public class HelperUser extends HelperBase{
         click(By.xpath("//button[text()='Sign Out']"));
     }
 
-    public boolean getAlertPresent(String message) {
+    public boolean isAlertPresent(String message) {
         Alert alert = new WebDriverWait(wd, 10)
                 .until(ExpectedConditions.alertIsPresent());
         if(alert!=null && alert.getText().contains(message)){
@@ -42,5 +50,11 @@ public class HelperUser extends HelperBase{
             //click ok
             // click cancel --> alert.dismiss();
             // type in alert --> alert.sendKeys();
+    }
+
+    public boolean isNoContaxtHereDisplayd() {
+        WebDriverWait wait = new WebDriverWait(wd, 5);
+        return wait.until(ExpectedConditions.textToBePresentInElement(wd.findElement(By.cssSelector(".contact-page_message__2qafk>h1")),
+                "No Contacts here!"));
     }
 }

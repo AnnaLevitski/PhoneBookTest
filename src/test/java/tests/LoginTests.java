@@ -1,5 +1,6 @@
 package tests;
 
+import model.User;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,6 +14,17 @@ public class LoginTests extends TestBase{
         }
     }
 
+    @Test
+    public void loginSuccessTest_User(){
+        User user = new User().withEmail("mara@gmail.com").withPassword("Mmar123456$");
+
+        app.getHelperUser().openLoginRegForm();
+        app.getHelperUser().fillLoginRegForm(user);
+        app.getHelperUser().loginSubmit();
+
+        Assert.assertTrue(app.getHelperUser().isLogged());
+
+    }
     @Test
     public void loginSuccessTest(){
         app.getHelperUser().openLoginRegForm();
@@ -36,7 +48,7 @@ public class LoginTests extends TestBase{
         app.getHelperUser().fillLoginRegForm("maragmail.com", "Mmar123456$");
         app.getHelperUser().loginSubmit();
 
-        Assert.assertTrue(app.getHelperUser().getAlertPresent("Wrong email or password"));
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
     @Test
     public void loginWrongPassword(){
@@ -44,7 +56,7 @@ public class LoginTests extends TestBase{
         app.getHelperUser().fillLoginRegForm("mara@gmail.com", "Mmar123456");
         app.getHelperUser().loginSubmit();
 
-        Assert.assertTrue(app.getHelperUser().getAlertPresent("Wrong email or password"));
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
     @Test
     public void loginUnregistredUser(){
@@ -52,7 +64,7 @@ public class LoginTests extends TestBase{
         app.getHelperUser().fillLoginRegForm("notMaria@gmail.com", "Mmar123456$");
         app.getHelperUser().loginSubmit();
 
-        Assert.assertTrue(app.getHelperUser().getAlertPresent("Wrong email or password"));
+        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
     @AfterMethod
     public void postConditions(){
