@@ -29,6 +29,16 @@ public class RegistrationTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isLogged());
         Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
     }
+    @Test
+    public void registrationSuccess_2(){
+        User user = new User().withEmail("dototo1223456@gmail.com").withPassword("Mmar123456$");
+        app.getHelperUser().openLoginRegForm();
+        app.getHelperUser().fillLoginRegForm(user);
+        app.getHelperUser().registrationSubmit();
+
+        Assert.assertTrue(app.getHelperUser().isLogged());
+        Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
+    }
     @Test(description = "Bug report #1234, Fixed") //enabled = false - делает тест нерабочим
     public void registrationWrongEmail(){
         User user = new User().withEmail("dototogmail.com").withPassword("Mmar123456$");

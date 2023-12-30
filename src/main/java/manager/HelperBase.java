@@ -31,4 +31,8 @@ public class HelperBase {
         List<WebElement> list = wd.findElements(locator);
         return list.size()>0;
     }
+    public String getText(By locator){
+        WebElement el = wd.findElement(locator);
+        return el.getText();
+    }
 }

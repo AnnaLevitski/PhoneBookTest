@@ -9,6 +9,7 @@ public class ApplicationManager {
     WebDriver wd;
 
     HelperUser helperUser;
+    HelperConact helperConact;
 
     public void init(){
         wd = new ChromeDriver();
@@ -17,10 +18,15 @@ public class ApplicationManager {
         wd.navigate().to("https://telranedu.web.app/");
 
         helperUser = new HelperUser(wd);
+        helperConact = new HelperConact(wd);
     }
 
     public HelperUser getHelperUser() {
         return helperUser;
+    }
+
+    public HelperConact getHelperConact() {
+        return helperConact;
     }
 
     public void stop(){
