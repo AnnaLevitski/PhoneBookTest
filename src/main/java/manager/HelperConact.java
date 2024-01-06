@@ -2,7 +2,10 @@ package manager;
 
 import model.Contact;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
 
 public class HelperConact extends HelperBase{
     By buttonAdd = By.cssSelector("a[href='/add']");
@@ -12,7 +15,8 @@ public class HelperConact extends HelperBase{
     By inputEmail = By.cssSelector("input[placeholder='email']");
     By inputAddress = By.cssSelector("input[placeholder='Address']");
     By inputDescription = By.cssSelector("input[placeholder='description']");
-    By buttonSave = By.xpath("//button/b");
+    By buttonSaveB = By.xpath("//button/b");
+    By buttonSave = By.xpath("//div[@class='add_form__2rsm2']/button");
     public HelperConact(WebDriver wd) {
         super(wd);
     }
@@ -28,11 +32,21 @@ public class HelperConact extends HelperBase{
         findAndType(inputEmail, contact.getEmail());
         findAndType(inputAddress, contact.getAddress());
         findAndType(inputDescription, contact.getDescription());
+        if(contact.getLastName()==""){
+            wd.findElement(inputLastName).click();
+            int y = wd.findElement(inputLastName).getAttribute("value").length();
+            for( ;y>0;y--){
+                wd.findElement(inputLastName).sendKeys(Keys.BACK_SPACE);
+            }
+        }
     }
 
     public void registrationSubmit() {
         click(buttonSave);
 
+    }
+    public boolean isSubmitClicable(){ //to be fixed
+        return isClickable_Wait(buttonSave, 10);
     }
 
     public boolean isContactCreated(Contact contact) {

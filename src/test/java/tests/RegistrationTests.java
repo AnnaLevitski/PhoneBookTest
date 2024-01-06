@@ -24,8 +24,8 @@ public class RegistrationTests extends TestBase{
         User user = new User().withEmail("dototo"+i+"@gmail.com").withPassword("Mmar123456$");
         app.getHelperUser().openLoginRegForm();
         app.getHelperUser().fillLoginRegForm(user);
+        Assert.assertTrue(app.getHelperUser().isLogged());
         app.getHelperUser().registrationSubmit();
-
         Assert.assertTrue(app.getHelperUser().isLogged());
         Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
     }
