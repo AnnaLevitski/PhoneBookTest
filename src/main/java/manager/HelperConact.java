@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.util.Random;
+
 public class HelperConact extends HelperBase{
     By buttonAdd = By.cssSelector("a[href='/add']");
     By inputName = By.cssSelector("input[placeholder='Name']");
@@ -17,6 +19,11 @@ public class HelperConact extends HelperBase{
     By inputDescription = By.cssSelector("input[placeholder='description']");
     By buttonSaveB = By.xpath("//button/b");
     By buttonSave = By.xpath("//div[@class='add_form__2rsm2']/button");
+    By tabContacts = By.cssSelector("a[href='/contacts']");
+    By contactItems = By.className("contact-item_card__2SOIM");
+    By contactItem = By.xpath("//div[1][@class='contact-item_card__2SOIM']");
+    By buttonContactRemove = By.xpath("//button[contains(text(),'Rem')]");
+    //By buttonContactRemove = By.xpath("//button[last()]");
     public HelperConact(WebDriver wd) {
         super(wd);
     }
@@ -71,5 +78,51 @@ public class HelperConact extends HelperBase{
         click(el);
         By el_2 = By.xpath("//*[starts-with(@class, 'contact-page_rightdiv')]//h2");
         return getText(el_2).equals(contact.getName()+" "+contact.getLastName());
+    }
+
+    public void openContactsForm() {
+        //class="active"
+        if(wd.findElement(tabContacts).getAttribute("class")==""){
+            click(tabContacts);
+        }
+    }
+
+    public void addContact() {
+        if(howMuchElsPressent(contactItem)==0){
+            Random random = new Random();
+            int i = random.nextInt(10000000)+456750;
+
+            Contact contact = Contact.builder()
+                    .name("Name")
+                    .lastName("LName")
+                    .phone("045"+i)
+                    .email("name@gmail.com")
+                    .address("TA 123-45")
+                    .description("Here you go")
+                    .build();
+            openLoginRegForm();
+            fillLoginRegForm(contact);
+            getScreenshot("src/test/screenshots/screen_"+i+".png");
+            registrationSubmit();
+        }
+    }
+
+    public void removeOneContact() {
+        click(contactItem);
+        click(buttonContactRemove);
+        pause(1000);
+    }
+
+    public int howMuchContactItems() {
+       return howMuchElsPressent(contactItems);
+    }
+    public void removeAllContacts() {
+        for(int i = howMuchContactItems(); i>0 ; i--){
+            removeOneContact();
+        }
+    }
+
+    public boolean isNoContactsHereH1Present() {
+        return isElPressent(By.xpath("//h1[text()=' No Contacts here!']"));
     }
 }

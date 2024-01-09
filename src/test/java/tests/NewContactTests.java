@@ -33,6 +33,7 @@ public class NewContactTests extends TestBase{
                 .build();
         app.getHelperConact().openLoginRegForm();
         app.getHelperConact().fillLoginRegForm(contact);
+        app.getHelperConact().getScreenshot("src/test/screenshots/screen_"+i+".png");
         app.getHelperConact().registrationSubmit();
 
         Assert.assertTrue(app.getHelperConact().isContactCreated(contact));

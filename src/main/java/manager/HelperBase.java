@@ -1,12 +1,11 @@
 package manager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.nio.file.WatchEvent;
+import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 public class HelperBase {
@@ -57,8 +56,22 @@ public class HelperBase {
         List<WebElement> list = wd.findElements(locator);
         return list.size()>0;
     }
+    public int howMuchElsPressent(By locator){
+        List<WebElement> list = wd.findElements(locator);
+        return list.size();
+    }
     public String getText(By locator){
         WebElement el = wd.findElement(locator);
         return el.getText();
+    }
+
+    public void getScreenshot(String link) {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) wd;
+        File tmp = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        try {
+            Files.copy(tmp.toPath(), new File(link).toPath());
+        }catch (Exception e){
+
+        }
     }
 }
