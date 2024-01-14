@@ -36,6 +36,7 @@ public class NewContactTests extends TestBase{
         app.getHelperConact().getScreenshot("src/test/screenshots/screen_"+i+".png");
         app.getHelperConact().registrationSubmit();
 
+        logger.info("Assert new contact card is present ");
         Assert.assertTrue(app.getHelperConact().isContactCreated(contact));
         Assert.assertTrue(app.getHelperConact().isContactCreated_lastElement(contact));
     }
@@ -57,6 +58,7 @@ public class NewContactTests extends TestBase{
         app.getHelperConact().fillLoginRegForm(contact);
         app.getHelperConact().registrationSubmit();
 
+        logger.info("Assert new contact card is present ");
         Assert.assertTrue(app.getHelperConact().isContactCreated(contact));
         Assert.assertTrue(app.getHelperConact().isContactCreated_goToElPage(contact));
         Assert.assertTrue(app.getHelperConact().isContactCreated_goToElPage_Name(contact));
@@ -79,6 +81,7 @@ public class NewContactTests extends TestBase{
         app.getHelperConact().fillLoginRegForm(contact);
         app.getHelperConact().registrationSubmit();
 
+        logger.info("Assert new contact card is present ");
         Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
     }
     @Test
@@ -99,6 +102,7 @@ public class NewContactTests extends TestBase{
         app.getHelperConact().fillLoginRegForm(contact);
         app.getHelperConact().registrationSubmit();
 
+        logger.info("Assert new contact card is present");
         Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
     }
 
@@ -120,6 +124,7 @@ public class NewContactTests extends TestBase{
         app.getHelperConact().fillLoginRegForm(contact);
         app.getHelperConact().registrationSubmit();
 
+        logger.info("Assert new contact card is present ");
         Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
     }
 
@@ -138,6 +143,7 @@ public class NewContactTests extends TestBase{
         app.getHelperConact().fillLoginRegForm(contact);
         app.getHelperConact().registrationSubmit();
 
+        logger.info("Assert that alert 'Phone not valid' is present ");
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Phone not valid"));
     }
 
@@ -159,6 +165,7 @@ public class NewContactTests extends TestBase{
         app.getHelperConact().fillLoginRegForm(contact);
         app.getHelperConact().registrationSubmit();
 
+        logger.info("Assert new contact card is present ");
         Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
     }
 

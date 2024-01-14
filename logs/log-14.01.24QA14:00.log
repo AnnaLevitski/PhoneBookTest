@@ -1,0 +1,35 @@
+14:00 INFO  manager.ApplicationManager [Test worker] Browser chrome
+14:00 INFO  manager.ApplicationManager [Test worker] Link https://telranedu.web.app/home
+
+
+14:00 INFO  tests.TestBase [Test worker] LoginTests___loginSuccessTest
+14:00 INFO  tests.TestBase [Test worker] Test data: `mara@gmail.com`, `Mmar123456$`
+14:00 INFO  tests.TestBase [Test worker] Assert check is button 'Sign Out' present 
+14:00 INFO  tests.TestBase [Test worker] SUCCESS 
+
+14:00 INFO  tests.TestBase [Test worker] LoginTests___loginSuccessTest1
+14:00 INFO  tests.TestBase [Test worker] Before method finished logout
+14:00 INFO  tests.TestBase [Test worker] SUCCESS 
+
+14:00 INFO  tests.TestBase [Test worker] LoginTests___loginSuccessTest_User
+14:00 INFO  tests.TestBase [Test worker] Before method finished logout
+14:00 INFO  tests.TestBase [Test worker] Test data: `mara@gmail.com`, `Mmar123456$`
+14:00 INFO  tests.TestBase [Test worker] Assert check is button 'Sign Out' present 
+14:00 INFO  tests.TestBase [Test worker] SUCCESS 
+
+14:00 INFO  tests.TestBase [Test worker] LoginTests___loginUnregistredUser
+14:00 INFO  tests.TestBase [Test worker] Before method finished logout
+14:00 INFO  tests.TestBase [Test worker] Test data: `notMaria@gmail.com`, `Mmar123456$`
+14:00 INFO  tests.TestBase [Test worker] Assert alert 'Wrong email or password' present 
+14:00 INFO  tests.TestBase [Test worker] SUCCESS 
+
+14:00 INFO  tests.TestBase [Test worker] LoginTests___loginWrongEmail
+14:01 INFO  tests.TestBase [Test worker] Test data: `maragmail.com`, `Mmar123456$`
+14:01 INFO  tests.TestBase [Test worker] Assert alert 'Wrong email or password' present
+14:01 INFO  tests.TestBase [Test worker] SUCCESS 
+
+14:01 INFO  tests.TestBase [Test worker] LoginTests___loginWrongPassword
+14:01 INFO  tests.TestBase [Test worker] Test data: `mara@gmail.com`, `Mmar123456`
+14:01 INFO  tests.TestBase [Test worker] Assert alert 'Wrong email or password' present
+14:01 INFO  tests.TestBase [Test worker] SUCCESS 
+

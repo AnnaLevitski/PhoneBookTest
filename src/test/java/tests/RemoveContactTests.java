@@ -2,12 +2,14 @@ package tests;
 
 import model.User;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.TestNG;
+import org.testng.annotations.*;
 
-public class RemiveContactTests extends TestBase{
+import java.io.IOException;
+
+public class RemoveContactTests extends TestBase{
     @BeforeClass
     public void preCondition(){
         User user = new User().withEmail("dototo1223456@gmail.com").withPassword("Mmar123456$");
@@ -15,6 +17,7 @@ public class RemiveContactTests extends TestBase{
         app.getHelperUser().fillLoginRegForm(user);
         app.getHelperUser().loginSubmit();
     }
+
     @BeforeMethod
     public void bm(){
         app.getHelperConact().openContactsForm();
@@ -22,13 +25,17 @@ public class RemiveContactTests extends TestBase{
     }
     @Test
     public void removeOneContact(){
+
         System.out.println("removeOneContact");
         //Assert size list less by  one
         int size = app.getHelperConact().howMuchContactItems();
         System.out.println("size _- "+ size);
         app.getHelperConact().removeOneContact();
         System.out.println("app _- "+ app.getHelperConact().howMuchContactItems());
+        logger.info("Assert check that list of contacts decreased by one ");
+        logger.info("Was "+size +" now "+app.getHelperConact().howMuchContactItems());
         Assert.assertTrue(size-app.getHelperConact().howMuchContactItems()==1);
+
 
 
     }
@@ -36,7 +43,9 @@ public class RemiveContactTests extends TestBase{
     public void removeAllContacts(){
         System.out.println("removeAllContacts");
         app.getHelperConact().removeAllContacts();
+        logger.info("Assert check is div 'No Contacts Here' present ");
         Assert.assertTrue(app.getHelperConact().isNoContactsHereH1Present());
-
     }
+
+
 }

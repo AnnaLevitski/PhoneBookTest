@@ -26,6 +26,8 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().fillLoginRegForm(user);
         Assert.assertTrue(app.getHelperUser().isLogged());
         app.getHelperUser().registrationSubmit();
+
+        logger.info("Assert that button 'Sign Out' is present ");
         Assert.assertTrue(app.getHelperUser().isLogged());
         Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
     }
@@ -36,6 +38,7 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().fillLoginRegForm(user);
         app.getHelperUser().registrationSubmit();
 
+        logger.info("Assert that button 'Sign Out' is present ");
         Assert.assertTrue(app.getHelperUser().isLogged());
         Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
     }
@@ -46,6 +49,7 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().fillLoginRegForm(user);
         app.getHelperUser().registrationSubmit();
 
+        logger.info("Assert alert 'Wrong email or password' is present ");
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
     @Test
@@ -57,6 +61,7 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().fillLoginRegForm(user);
         app.getHelperUser().registrationSubmit();
 
+        logger.info("Assert alert 'Wrong email or password' is present ");
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
     @Test
@@ -66,6 +71,7 @@ public class RegistrationTests extends TestBase{
         app.getHelperUser().fillLoginRegForm("mara@gmail.com", "Xcj123456$");
         app.getHelperUser().registrationSubmit();
 
+        logger.info("Assert alert 'User already exist' is present ");
         Assert.assertTrue(app.getHelperUser().isAlertPresent("User already exist"));
     }
     @AfterMethod

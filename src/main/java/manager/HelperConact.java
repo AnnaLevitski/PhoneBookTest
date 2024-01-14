@@ -104,6 +104,7 @@ public class HelperConact extends HelperBase{
             fillLoginRegForm(contact);
             getScreenshot("src/test/screenshots/screen_"+i+".png");
             registrationSubmit();
+            logger.info("New contact created");
         }
     }
 
