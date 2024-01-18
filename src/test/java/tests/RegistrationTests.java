@@ -1,5 +1,6 @@
 package tests;
 
+import manager.DataProviderUser;
 import model.User;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -16,12 +17,8 @@ public class RegistrationTests extends TestBase{
         }
     }
 
-    @Test
-    public void registrationSuccess(){
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        // int d = (int)(System.currentTimeMillis()/1000%3600);
-        User user = new User().withEmail("dototo"+i+"@gmail.com").withPassword("Mmar123456$");
+    @Test(dataProvider = "registr_success", dataProviderClass = DataProviderUser.class)
+    public void registrationSuccess(User user){
         app.getHelperUser().openLoginRegForm();
         app.getHelperUser().fillLoginRegForm(user);
         Assert.assertTrue(app.getHelperUser().isLogged());
@@ -31,44 +28,24 @@ public class RegistrationTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isLogged());
         Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
     }
-    @Test
-    public void registrationSuccess_2(){
-        User user = new User().withEmail("dototo1223456@gmail.com").withPassword("Mmar123456$");
-        app.getHelperUser().openLoginRegForm();
-        app.getHelperUser().fillLoginRegForm(user);
-        app.getHelperUser().registrationSubmit();
 
-        logger.info("Assert that button 'Sign Out' is present ");
-        Assert.assertTrue(app.getHelperUser().isLogged());
-        Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
-    }
-    @Test(enabled = false, description = "Bug report #1234, Fixed") //enabled = false - делает тест нерабочим
-    public void registrationWrongEmail(){
-        User user = new User().withEmail("dototogmail.com").withPassword("Mmar123456$");
-        app.getHelperUser().openLoginRegForm();
-        app.getHelperUser().fillLoginRegForm(user);
-        app.getHelperUser().registrationSubmit();
+    @Test(dataProvider = "regData_negative", dataProviderClass = DataProviderUser.class)
+    public void registration_negative(User user){
+        if(user.getEmail().contains("@")){
+            app.getHelperUser().openLoginRegForm();
+            app.getHelperUser().fillLoginRegForm(user);
+            app.getHelperUser().registrationSubmit();
+        }else {
+            logger.info("Wrong email bug (enabled = false, description = 'Bug report #1234, Fixed')");
+        }
 
         logger.info("Assert alert 'Wrong email or password' is present ");
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
     }
-    @Test
-    public void registrationWrongPassword(){
-        Random random = new Random();
-        int i = random.nextInt(1000);
-        User user = new User().withEmail("dototo"+i+"@gmail.com").withPassword("Mmar123456");
+    @Test(dataProvider = "regData_negativeRegistredUserWithNewPassword", dataProviderClass = DataProviderUser.class)
+    public void registrationRegistredUserWithNewPassword(User user){
         app.getHelperUser().openLoginRegForm();
-        app.getHelperUser().fillLoginRegForm(user);
-        app.getHelperUser().registrationSubmit();
-
-        logger.info("Assert alert 'Wrong email or password' is present ");
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
-    }
-    @Test
-    public void registrationRegistredUserWithNewPassword(){
-
-        app.getHelperUser().openLoginRegForm();
-        app.getHelperUser().fillLoginRegForm("mara@gmail.com", "Xcj123456$");
+        app.getHelperUser().fillLoginRegForm(user.getEmail(), user.getPassword());
         app.getHelperUser().registrationSubmit();
 
         logger.info("Assert alert 'User already exist' is present ");

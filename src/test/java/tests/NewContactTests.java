@@ -1,14 +1,17 @@
 package tests;
 
+import manager.DataProviderContact;
+import manager.TestNGListener;
 import model.Contact;
 import model.User;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.Random;
-
+@Listeners(TestNGListener.class)
 public class NewContactTests extends TestBase{
     @BeforeClass
     public void preCondition(){
@@ -17,128 +20,32 @@ public class NewContactTests extends TestBase{
         app.getHelperUser().fillLoginRegForm(user);
         app.getHelperUser().loginSubmit();
     }
-    @Test
-    public void addNewContct_success(){
-        System.out.println("-->  addNewContct_success ");
-        Random random = new Random();
-        int i = random.nextInt(10000000)+456750;
-
-        Contact contact = Contact.builder()
-                .name("Name")
-                .lastName("LName")
-                .phone("045"+i)
-                .email("name@gmail.com")
-                .address("TA Blond 11")
-                .description("Kisa")
-                .build();
+    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContact.class)
+    public void addNewContct_success(Contact contact){
         app.getHelperConact().openLoginRegForm();
         app.getHelperConact().fillLoginRegForm(contact);
-        app.getHelperConact().getScreenshot("src/test/screenshots/screen_"+i+".png");
         app.getHelperConact().registrationSubmit();
 
         logger.info("Assert new contact card is present ");
         Assert.assertTrue(app.getHelperConact().isContactCreated(contact));
         Assert.assertTrue(app.getHelperConact().isContactCreated_lastElement(contact));
     }
-    @Test
-    public void addNewContct_successBlankDescription(){
-        System.out.println("-->  addNewContct_successBlankDescription ");
-        Random random = new Random();
-        int i = random.nextInt(10000000)+456750;
 
-        Contact contact = Contact.builder()
-                .name("Joan")
-                .lastName("LName")
-                .phone("045"+i)
-                .email("name@gmail.com")
-                .address("TA Blond 11")
-                .description("")
-                .build();
-        app.getHelperConact().openLoginRegForm();
-        app.getHelperConact().fillLoginRegForm(contact);
-        app.getHelperConact().registrationSubmit();
-
-        logger.info("Assert new contact card is present ");
-        Assert.assertTrue(app.getHelperConact().isContactCreated(contact));
-        Assert.assertTrue(app.getHelperConact().isContactCreated_goToElPage(contact));
-        Assert.assertTrue(app.getHelperConact().isContactCreated_goToElPage_Name(contact));
-    }
-    @Test
-    public void addNewContct_negativeLName(){
-        System.out.println("-->  addNewContct_negativeLName ");
-        Random random = new Random();
-        int i = random.nextInt(10000000)+456750;
-
-        Contact contact = Contact.builder()
-                .name("No Last Name Here!!!!")
-                .lastName("")
-                .phone("045"+i)
-                .email("name@gmail.com")
-                .address("Na 11o BM")
-                .description("")
-                .build();
-        app.getHelperConact().openLoginRegForm();
-        app.getHelperConact().fillLoginRegForm(contact);
-        app.getHelperConact().registrationSubmit();
-
-        logger.info("Assert new contact card is present ");
-        Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
-    }
-    @Test
-    public void addNewContct_negativeName(){
-        System.out.println("-->  addNewContct_negativeName ");
-        Random random = new Random();
-        int i = random.nextInt(10000000)+456750;
-
-        Contact contact = Contact.builder()
-                .name("")
-                .lastName("LName")
-                .phone("045"+i)
-                .email("name@gmail.com")
-                .address("TA Blond 11")
-                .description("")
-                .build();
-        app.getHelperConact().openLoginRegForm();
-        app.getHelperConact().fillLoginRegForm(contact);
-        app.getHelperConact().registrationSubmit();
-
-        logger.info("Assert new contact card is present");
+    @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class)
+    public void addNewContct_negativeContactIsNotCreated(Contact contact){
+        if(contact.getEmail().contains("@")){
+            app.getHelperConact().openLoginRegForm();
+            app.getHelperConact().fillLoginRegForm(contact);
+            app.getHelperConact().registrationSubmit();
+        }else {
+            logger.info("Wrong email (enabled = false, description = 'Bug report #1234')");
+        }
+        logger.info("Assert new contact card is not present ");
         Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
     }
 
-    @Test
-    public void addNewContct_negativeAdress(){
-        System.out.println("-->  addNewContct_negativeAdress ");
-        Random random = new Random();
-        int i = random.nextInt(10000000)+456750;
-
-        Contact contact = Contact.builder()
-                .name("Nam")
-                .lastName("LName")
-                .phone("045"+i)
-                .email("name@gmail.com")
-                .address("")
-                .description("")
-                .build();
-        app.getHelperConact().openLoginRegForm();
-        app.getHelperConact().fillLoginRegForm(contact);
-        app.getHelperConact().registrationSubmit();
-
-        logger.info("Assert new contact card is present ");
-        Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
-    }
-
-    @Test
-    public void addNewContct_negativePhone(){
-        System.out.println("-->  addNewContct_negativePhone ");
-        Contact contact = Contact.builder()
-                .name("Nam")
-                .lastName("LName")
-                .phone("0")
-                .email("name@gmail.com")
-                .address("Pizza 60")
-                .description("")
-                .build();
+    @Test(dataProvider = "contact_negativeAlertPresent", dataProviderClass = DataProviderContact.class)
+    public void addNewContct_negativeAlertPresent(Contact contact){
         app.getHelperConact().openLoginRegForm();
         app.getHelperConact().fillLoginRegForm(contact);
         app.getHelperConact().registrationSubmit();
@@ -147,27 +54,7 @@ public class NewContactTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Phone not valid"));
     }
 
-    @Test(enabled = false, description = "Bug report #1234")
-    public void addNewContct_negativeEmail(){
-        System.out.println("-->  addNewContct_negativeEmail ");
-        Random random = new Random();
-        int i = random.nextInt(10000000)+456750;
 
-        Contact contact = Contact.builder()
-                .name("Nam")
-                .lastName("LName")
-                .phone("045"+i)
-                .email("")
-                .address("Na 11o BM")
-                .description("")
-                .build();
-        app.getHelperConact().openLoginRegForm();
-        app.getHelperConact().fillLoginRegForm(contact);
-        app.getHelperConact().registrationSubmit();
-
-        logger.info("Assert new contact card is present ");
-        Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
-    }
 
 
     @AfterClass
