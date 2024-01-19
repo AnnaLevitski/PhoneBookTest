@@ -33,13 +33,13 @@ public class NewContactTests extends TestBase{
 
     @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class)
     public void addNewContct_negativeContactIsNotCreated(Contact contact){
-        if(contact.getEmail().contains("@")){
-            app.getHelperConact().openLoginRegForm();
-            app.getHelperConact().fillLoginRegForm(contact);
-            app.getHelperConact().registrationSubmit();
-        }else {
+        if(!contact.getEmail().contains("@")){
             logger.info("Wrong email (enabled = false, description = 'Bug report #1234')");
         }
+        app.getHelperConact().openLoginRegForm();
+        app.getHelperConact().fillLoginRegForm(contact);
+        app.getHelperConact().registrationSubmit();
+
         logger.info("Assert new contact card is not present ");
         Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
     }

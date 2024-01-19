@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,11 +38,9 @@ public class LoginTests extends TestBase{
     }
 
     @Test(dataProvider = "loginData", dataProviderClass = DataProviderUser.class)
-    public void loginSuccessTest(User user){
-       // logger.info("Start `loginSuccessTest`");
-        logger.info("Test data: `"+user.getEmail()+"`, `"+user.getPassword()+"`");
+    public void loginSuccessTest(String email, String password){
         app.getHelperUser().openLoginRegForm();
-        app.getHelperUser().fillLoginRegForm(user.getEmail(), user.getPassword());
+        app.getHelperUser().fillLoginRegForm(email, password);
         app.getHelperUser().loginSubmit();
 
         logger.info("Assert check is button 'Sign Out' present ");

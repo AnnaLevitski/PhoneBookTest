@@ -21,7 +21,6 @@ public class RegistrationTests extends TestBase{
     public void registrationSuccess(User user){
         app.getHelperUser().openLoginRegForm();
         app.getHelperUser().fillLoginRegForm(user);
-        Assert.assertTrue(app.getHelperUser().isLogged());
         app.getHelperUser().registrationSubmit();
 
         logger.info("Assert that button 'Sign Out' is present ");
@@ -31,13 +30,12 @@ public class RegistrationTests extends TestBase{
 
     @Test(dataProvider = "regData_negative", dataProviderClass = DataProviderUser.class)
     public void registration_negative(User user){
-        if(user.getEmail().contains("@")){
-            app.getHelperUser().openLoginRegForm();
-            app.getHelperUser().fillLoginRegForm(user);
-            app.getHelperUser().registrationSubmit();
-        }else {
+        if(!user.getEmail().contains("@")){
             logger.info("Wrong email bug (enabled = false, description = 'Bug report #1234, Fixed')");
         }
+        app.getHelperUser().openLoginRegForm();
+        app.getHelperUser().fillLoginRegForm(user);
+        app.getHelperUser().registrationSubmit();
 
         logger.info("Assert alert 'Wrong email or password' is present ");
         Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
