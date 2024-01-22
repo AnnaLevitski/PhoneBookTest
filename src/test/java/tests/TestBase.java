@@ -54,7 +54,7 @@ public class TestBase {
             logger.info("No go \n");
         }
     }
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void tearDown(){
         app.stop();
     }

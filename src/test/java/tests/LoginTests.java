@@ -22,7 +22,7 @@ public class LoginTests extends TestBase{
         }
     }
 
-    @Test(dataProvider = "loginModels", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "login_fromFile", dataProviderClass = DataProviderUser.class)
     public void loginSuccessTest_User(User user){
        // logger.info("`loginSuccessTest_User`");
         logger.info("login data: `"+user.getEmail()+"`, `"+user.getPassword()+"`");

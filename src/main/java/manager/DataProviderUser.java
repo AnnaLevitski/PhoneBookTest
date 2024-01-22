@@ -3,6 +3,10 @@ package manager;
 import model.User;
 import org.testng.annotations.DataProvider;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +20,7 @@ public class DataProviderUser {
         list.add(new Object[]{"dototo1223456@gmail.com", "Mmar123456$"});
         return list.iterator();
     };
+
     @DataProvider
     public Iterator<Object[]> loginData_negative(){
         List<Object[]> list = new ArrayList<>();
@@ -58,6 +63,17 @@ public class DataProviderUser {
     @DataProvider
     public Iterator<Object[]> login_fromFile(){
         List<Object[]> list = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/test.csv")));
+            String line = reader.readLine();
+            while (line!=null) {
+                String[] arr = line.split(",");
+                list.add(new Object[]{new User().withEmail(arr[0]).withPassword(arr[1])});
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         return list.iterator();
     }

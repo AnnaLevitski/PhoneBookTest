@@ -20,7 +20,7 @@ public class NewContactTests extends TestBase{
         app.getHelperUser().fillLoginRegForm(user);
         app.getHelperUser().loginSubmit();
     }
-    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContact.class)
+    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContact.class, invocationCount = 10)
     public void addNewContct_success(Contact contact){
         app.getHelperConact().openLoginRegForm();
         app.getHelperConact().fillLoginRegForm(contact);
@@ -31,7 +31,7 @@ public class NewContactTests extends TestBase{
         Assert.assertTrue(app.getHelperConact().isContactCreated_lastElement(contact));
     }
 
-    @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class)
+    @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class, expectedExceptions = {Exception.class})
     public void addNewContct_negativeContactIsNotCreated(Contact contact){
         if(!contact.getEmail().contains("@")){
             logger.info("Wrong email (enabled = false, description = 'Bug report #1234')");
