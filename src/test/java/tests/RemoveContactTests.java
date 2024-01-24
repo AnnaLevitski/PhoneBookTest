@@ -25,11 +25,8 @@ public class RemoveContactTests extends TestBase{
     }
     @Test
     public void removeOneContact(){
-
-        System.out.println("removeOneContact");
         //Assert size list less by  one
         int size = app.getHelperConact().howMuchContactItems();
-        System.out.println("size _- "+ size);
         app.getHelperConact().removeOneContact();
         System.out.println("app _- "+ app.getHelperConact().howMuchContactItems());
         logger.info("Assert check that list of contacts decreased by one ");

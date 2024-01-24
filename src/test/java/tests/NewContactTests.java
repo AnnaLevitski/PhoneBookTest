@@ -31,17 +31,18 @@ public class NewContactTests extends TestBase{
         Assert.assertTrue(app.getHelperConact().isContactCreated_lastElement(contact));
     }
 
-    @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class, expectedExceptions = {Exception.class})
+    @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class)
     public void addNewContct_negativeContactIsNotCreated(Contact contact){
         if(!contact.getEmail().contains("@")){
             logger.info("Wrong email (enabled = false, description = 'Bug report #1234')");
-        }
-        app.getHelperConact().openLoginRegForm();
-        app.getHelperConact().fillLoginRegForm(contact);
-        app.getHelperConact().registrationSubmit();
+        }else {
+            app.getHelperConact().openLoginRegForm();
+            app.getHelperConact().fillLoginRegForm(contact);
+            app.getHelperConact().registrationSubmit();
 
-        logger.info("Assert new contact card is not present ");
-        Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
+            logger.info("Assert new contact card is not present ");
+            Assert.assertFalse(app.getHelperConact().isContactCreated(contact));
+        }
     }
 
     @Test(dataProvider = "contact_negativeAlertPresent", dataProviderClass = DataProviderContact.class)

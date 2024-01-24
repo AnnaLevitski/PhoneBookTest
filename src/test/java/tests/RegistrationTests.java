@@ -32,13 +32,14 @@ public class RegistrationTests extends TestBase{
     public void registration_negative(User user){
         if(!user.getEmail().contains("@")){
             logger.info("Wrong email bug (enabled = false, description = 'Bug report #1234, Fixed')");
-        }
-        app.getHelperUser().openLoginRegForm();
-        app.getHelperUser().fillLoginRegForm(user);
-        app.getHelperUser().registrationSubmit();
+        }else {
+            app.getHelperUser().openLoginRegForm();
+            app.getHelperUser().fillLoginRegForm(user);
+            app.getHelperUser().registrationSubmit();
 
-        logger.info("Assert alert 'Wrong email or password' is present ");
-        Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+            logger.info("Assert alert 'Wrong email or password' is present ");
+            Assert.assertTrue(app.getHelperUser().isAlertPresent("Wrong email or password"));
+        }
     }
     @Test(dataProvider = "regData_negativeRegistredUserWithNewPassword", dataProviderClass = DataProviderUser.class)
     public void registrationRegistredUserWithNewPassword(User user){

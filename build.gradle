@@ -14,8 +14,6 @@ dependencies {
     implementation group: 'org.testng', name: 'testng', version: '7.4.0'
 
     implementation 'ch.qos.logback:logback-classic:1.2.11'
-    implementation project(path: ':')
-    implementation project(path: ':')
 
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
