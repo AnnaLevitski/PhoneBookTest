@@ -30,9 +30,9 @@ public class ApplicationManager {
         if(browser.equals(BrowserType.CHROME)){
             wd = new EventFiringWebDriver(new ChromeDriver());
         }else if(browser.equals(BrowserType.FIREFOX)){
-            System.setProperty("webdriver.gecko.wd", "/Users/anna/Tools/geckodriver.exec");
+            //System.setProperty("webdriver.gecko.wd", "/Users/anna/Tools/geckodriver.exec");
 
-            wd = new EventFiringWebDriver(new FirefoxDriver()); // Изначальный вариант
+            wd = new EventFiringWebDriver(new FirefoxDriver()); 
         }else if(browser.equals(BrowserType.EDGE)){
             wd = new EventFiringWebDriver(new EdgeDriver());
         }
