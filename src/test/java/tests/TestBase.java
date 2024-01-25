@@ -9,6 +9,7 @@ import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.status.OnConsoleStatusListener;
 import ch.qos.logback.core.status.StatusManager;
 import manager.ApplicationManager;
+import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
@@ -24,19 +25,19 @@ public class TestBase {
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
 
-    static ApplicationManager app = new ApplicationManager();
+    static ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void setApp(){
         app.init();
     }
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void startLogger(Method m){
         String className = this.getClass().getName();
         String[] arrName = className.split("ts.", 2);;
         logger.info(arrName[1]+"___"+m.getName());
     }
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void calltestStatus(ITestResult result) throws IOException {
         testStatus(result);
     }

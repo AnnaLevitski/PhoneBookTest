@@ -13,14 +13,14 @@ import org.testng.annotations.Test;
 import java.util.Random;
 @Listeners(TestNGListener.class)
 public class NewContactTests extends TestBase{
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void preCondition(){
         User user = new User().withEmail("dototo1223456@gmail.com").withPassword("Mmar123456$");
         app.getHelperUser().openLoginRegForm();
         app.getHelperUser().fillLoginRegForm(user);
         app.getHelperUser().loginSubmit();
     }
-    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContact.class, invocationCount = 10)
+    @Test(dataProvider = "contactSuccess", dataProviderClass = DataProviderContact.class, invocationCount = 10, groups = {"smoke"})
     public void addNewContct_success(Contact contact){
         app.getHelperConact().openLoginRegForm();
         app.getHelperConact().fillLoginRegForm(contact);
@@ -31,7 +31,7 @@ public class NewContactTests extends TestBase{
         Assert.assertTrue(app.getHelperConact().isContactCreated_lastElement(contact));
     }
 
-    @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class)
+    @Test(dataProvider = "contact_negative", dataProviderClass = DataProviderContact.class, groups = {"smoke"})
     public void addNewContct_negativeContactIsNotCreated(Contact contact){
         if(!contact.getEmail().contains("@")){
             logger.info("Wrong email (enabled = false, description = 'Bug report #1234')");

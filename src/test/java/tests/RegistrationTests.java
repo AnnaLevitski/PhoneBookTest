@@ -10,14 +10,14 @@ import org.testng.annotations.Test;
 import java.util.Random;
 
 public class RegistrationTests extends TestBase{
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition(){
         if(app.getHelperUser().isLogged()){
             app.getHelperUser().logOut();
         }
     }
 
-    @Test(dataProvider = "registr_success", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "registr_success", dataProviderClass = DataProviderUser.class, groups = {"smoke"})
     public void registrationSuccess(User user){
         app.getHelperUser().openLoginRegForm();
         app.getHelperUser().fillLoginRegForm(user);
@@ -28,7 +28,7 @@ public class RegistrationTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isNoContaxtHereDisplayd());
     }
 
-    @Test(dataProvider = "regData_negative", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "regData_negative", dataProviderClass = DataProviderUser.class, groups = {"smoke"})
     public void registration_negative(User user){
         if(!user.getEmail().contains("@")){
             logger.info("Wrong email bug (enabled = false, description = 'Bug report #1234, Fixed')");

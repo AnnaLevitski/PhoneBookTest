@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class LoginTests extends TestBase{
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void preCondition(){
         if(app.getHelperUser().isLogged()){
             app.getHelperUser().logOut();
@@ -22,7 +22,7 @@ public class LoginTests extends TestBase{
         }
     }
 
-    @Test(dataProvider = "login_fromFile", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "login_fromFile", dataProviderClass = DataProviderUser.class, groups = {"smoke"})
     public void loginSuccessTest_User(User user){
        // logger.info("`loginSuccessTest_User`");
         logger.info("login data: `"+user.getEmail()+"`, `"+user.getPassword()+"`");
@@ -47,7 +47,7 @@ public class LoginTests extends TestBase{
         Assert.assertTrue(app.getHelperUser().isLogged());
     }
 
-    @Test(dataProvider = "loginData_negative", dataProviderClass = DataProviderUser.class)
+    @Test(dataProvider = "loginData_negative", dataProviderClass = DataProviderUser.class, groups = {"smoke"})
     public void login_negative(User user){
        // logger.info("Start `loginWrongEmail`");
         logger.info("Test data: `"+user.getEmail()+"`, `"+user.getPassword()+"`");

@@ -10,7 +10,7 @@ import org.testng.annotations.*;
 import java.io.IOException;
 
 public class RemoveContactTests extends TestBase{
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void preCondition(){
         User user = new User().withEmail("dototo1223456@gmail.com").withPassword("Mmar123456$");
         app.getHelperUser().openLoginRegForm();
@@ -18,12 +18,12 @@ public class RemoveContactTests extends TestBase{
         app.getHelperUser().loginSubmit();
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void bm(){
         app.getHelperConact().openContactsForm();
         app.getHelperConact().addContact();
     }
-    @Test
+    @Test(groups = {"smoke"})
     public void removeOneContact(){
         //Assert size list less by  one
         int size = app.getHelperConact().howMuchContactItems();
