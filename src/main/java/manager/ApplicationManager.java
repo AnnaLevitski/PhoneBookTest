@@ -26,8 +26,11 @@ public class ApplicationManager {
     }
 
     public void init(){
+
         //wd = new ChromeDriver();
         if(browser.equals(BrowserType.CHROME)){
+            String executable_path = "/Users/anna/Tools/chromedriver";
+            //System.setProperty("webdriver.chrome.driver", "/Users/anna/Tools/chromedriver");
             wd = new EventFiringWebDriver(new ChromeDriver());
         }else if(browser.equals(BrowserType.FIREFOX)){
             //System.setProperty("webdriver.gecko.wd", "/Users/anna/Tools/geckodriver.exec");
