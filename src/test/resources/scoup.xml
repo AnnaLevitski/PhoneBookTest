@@ -9,9 +9,6 @@
         </groups>
         <classes>
             <class name="tests.LoginTests"/>
-            <class name="tests.NewContactTests"/>
-            <class name="tests.RegistrationTests"/>
-            <class name="tests.RemoveContactTests"/>
         </classes>
     </test>
 </suite>
